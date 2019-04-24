@@ -11,3 +11,5 @@ package io.lamart.android.utils
 import androidx.fragment.app.FragmentManager
 
 operator fun FragmentManager.get(id: Int) = findFragmentById(id)
+
+operator fun FragmentManager.get(tag: String?) = findFragmentByTag(tag)

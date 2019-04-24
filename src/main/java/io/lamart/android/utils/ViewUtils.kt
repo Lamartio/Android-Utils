@@ -15,10 +15,11 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import io.lamart.utils.Dispose
+import io.lamart.utils.dispose
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View> ViewGroup.inflate(@LayoutRes resource: Int): T =
+infix fun <T : View> ViewGroup.inflate(@LayoutRes resource: Int): T =
     LayoutInflater
         .from(context)
         .inflate(resource, this, false)
@@ -35,4 +36,19 @@ fun <T : View> Fragment.bindView(@IdRes id: Int) = lazy { view?.findViewById<T>(
 
 fun <T : View> View.bindView(@IdRes id: Int) = lazy { findViewById<T>(id) }
 
-operator fun FragmentManager.get(tag: String?) = findFragmentByTag(tag)
+var View.isVisible: Boolean
+    get() = visibility == View.VISIBLE
+    set(value) = when (value) {
+        true -> visibility = View.VISIBLE
+        false -> visibility = View.GONE
+    }
+
+infix fun ViewGroup.add(view: View): Dispose {
+    addView(view)
+    return dispose { removeView(view) }
+}
+
+fun View.clicks(block: () -> Unit): Dispose {
+    setOnClickListener { block() }
+    return dispose { setOnClickListener(null) }
+}
