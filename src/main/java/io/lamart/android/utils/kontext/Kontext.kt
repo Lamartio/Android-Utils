@@ -28,7 +28,7 @@ interface Kontext : KontextSource, KontextCompat, Dips {
 
         operator fun invoke(context: Context): Kontext = object : Kontext {
 
-            override val context: Context = context
+            override val baseContext: Context = context
 
         }
 

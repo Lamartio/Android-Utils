@@ -16,17 +16,19 @@ import androidx.core.content.ContextCompat
 
 interface KontextCompat : KontextSource {
 
-    fun startActivity(intent: Intent, options: Bundle?) = ContextCompat.startActivity(context, intent, options)
+    fun startActivity(intent: Intent, options: Bundle?) = ContextCompat.startActivity(baseContext, intent, options)
+
+    fun getColor(@ColorRes id: Int) = ContextCompat.getColor(baseContext, id)
 
     fun getDrawable(@DrawableRes id: Int) =
-        ContextCompat.getDrawable(context, id)
+        ContextCompat.getDrawable(baseContext, id)
 
     fun getColorStateList(@ColorRes id: Int) =
-        ContextCompat.getColorStateList(context, id)
+        ContextCompat.getColorStateList(baseContext, id)
 
-    fun <T> getSystemService(type: Class<T>) = ContextCompat.getSystemService(context, type)
+    fun <T> getSystemService(type: Class<T>) = ContextCompat.getSystemService(baseContext, type)
 
-    fun getSystemServiceName(type: Class<*>) = ContextCompat.getSystemServiceName(context, type)
+    fun getSystemServiceName(type: Class<*>) = ContextCompat.getSystemServiceName(baseContext, type)
 
 }
 

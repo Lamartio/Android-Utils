@@ -25,9 +25,8 @@ fun Any?.toAdapterId(): Long =
 val CharSequence.hash: Long
     get() {
         var result = -0x340d631b7bdddcdbL
-        val len = length
 
-        for (i in 0 until len) {
+        for (i in 0 until length) {
             result = result xor get(i).toLong()
             result *= 0x100000001b3L
         }

@@ -13,3 +13,24 @@ package io.lamart.utils
 fun <T> Any?.cast() = this as T
 
 inline fun <reified T> Any?.castIf(): T? = takeIf { it is T }.cast()
+
+fun <T, R> T.fold(block: T.() -> R, onFailure: (Throwable) -> R): R =
+    io.lamart.utils.fold({ block() }, onFailure)
+
+fun <R> fold(block: () -> R, onFailure: (Throwable) -> R): R =
+    try {
+        block()
+    } catch (e: Throwable) {
+        onFailure(e)
+    }
+
+val Boolean.isTrue: Unit?
+    get() = when (this) {
+        true -> Unit
+        false -> null
+    }
+val Boolean.isFalse: Unit?
+    get() = when (this) {
+        true -> null
+        false -> Unit
+    }

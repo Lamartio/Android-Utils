@@ -10,21 +10,21 @@ package io.lamart.android.utils.recyclerview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_ID
 
 abstract class BindableAdapter<T> : RecyclerView.Adapter<BindableViewHolder<T>>(), Bindable<List<T>>
 
 fun <T> DiffList<T>.toBindableAdapter(
     create: (parent: ViewGroup, viewType: Int) -> BindableViewHolder<T>,
-    bind: BindableViewHolder<T>.(item: T, position: Int) -> Unit,
+    bind: BindableViewHolder<T>.(item: T, position: Int) -> Unit = { item, _ -> bind(item) },
     getViewType: (item: T, position: Int) -> Int = { _, _ -> 0 },
-    hasStableIds: Boolean = false,
-    getId: (item: T, position: Int) -> Any = { _, _ -> 0 }
+    getId: ((item: T, position: Int) -> Any)? = null
 ): BindableAdapter<T> = object : BindableAdapter<T>() {
 
     private val list = this@toBindableAdapter
 
     init {
-        setHasStableIds(hasStableIds)
+        setHasStableIds(getId != null)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<T> =
@@ -36,7 +36,7 @@ fun <T> DiffList<T>.toBindableAdapter(
     override fun getItemViewType(position: Int): Int = getViewType(list[position], position)
 
     override fun getItemId(position: Int): Long =
-        getId(list[position], position).toAdapterId()
+        getId?.invoke(list[position], position)?.toAdapterId() ?: NO_ID
 
     override fun getItemCount(): Int = list.size
 
