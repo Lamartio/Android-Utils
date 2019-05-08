@@ -11,7 +11,7 @@ package io.lamart.android.utils.recyclerview
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * Is only capable of converting a `Number` or a `CharSequence` to an id.
+ * Is only capable of converting a `Number` or a `CharSequence` to an id. Otherwise it will return `RecyclerView.NO_ID`.
  */
 
 fun Any?.toAdapterId(): Long =
