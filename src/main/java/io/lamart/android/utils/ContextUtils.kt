@@ -11,13 +11,23 @@ package io.lamart.android.utils
 import android.content.Context
 import android.content.ContextWrapper
 
-inline fun <reified T : Any> Context.find(tryApplicationContext: Boolean = true): T? =
-    find(T::class.java, tryApplicationContext)
+/**
+ * Recursively traverses up the baseContext property and returns the first Context that is a type of `T`.
+ */
 
-@Suppress("UNCHECKED_CAST")
+inline fun <reified T : Any> Context.find(inApplicationContext: Boolean = true): T? =
+    find(T::class.java, inApplicationContext)
+
+/**
+ * Recursively traverses up the baseContext property and returns the first Context that is the same Class.
+ */
+
 fun <T : Any> Context.find(type: Class<T>, inApplicationContext: Boolean = true): T? =
     when {
-        type.isInstance(this) -> this as T
+        type.isInstance(this) -> {
+            @Suppress("UNCHECKED_CAST")
+            this as T
+        }
         this is ContextWrapper -> baseContext.find(type, inApplicationContext)
         inApplicationContext -> applicationContext.find(type, false)
         else -> null

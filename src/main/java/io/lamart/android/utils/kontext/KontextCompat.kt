@@ -8,6 +8,7 @@
 
 package io.lamart.android.utils.kontext
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.ColorRes
@@ -16,19 +17,33 @@ import androidx.core.content.ContextCompat
 
 interface KontextCompat : KontextSource {
 
-    fun startActivity(intent: Intent, options: Bundle?) = ContextCompat.startActivity(baseContext, intent, options)
+    fun startActivity(intent: Intent, options: Bundle?) =
+        ContextCompat.startActivity(context, intent, options)
 
-    fun getColor(@ColorRes id: Int) = ContextCompat.getColor(baseContext, id)
+    fun getColor(@ColorRes id: Int) =
+        ContextCompat.getColor(context, id)
 
     fun getDrawable(@DrawableRes id: Int) =
-        ContextCompat.getDrawable(baseContext, id)
+        ContextCompat.getDrawable(context, id)
 
     fun getColorStateList(@ColorRes id: Int) =
-        ContextCompat.getColorStateList(baseContext, id)
+        ContextCompat.getColorStateList(context, id)
 
-    fun <T> getSystemService(type: Class<T>) = ContextCompat.getSystemService(baseContext, type)
+    fun <T> getSystemService(type: Class<T>) =
+        ContextCompat.getSystemService(context, type)
 
-    fun getSystemServiceName(type: Class<*>) = ContextCompat.getSystemServiceName(baseContext, type)
+    fun getSystemServiceName(type: Class<*>) =
+        ContextCompat.getSystemServiceName(context, type)
+
+    companion object {
+
+        operator fun invoke(context: Context) = object : KontextCompat {
+
+            override val context: Context = context
+
+        }
+
+    }
 
 }
 

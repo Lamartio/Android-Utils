@@ -8,9 +8,6 @@
 
 package io.lamart.android.utils.kontext
 
-import android.content.Context
-import android.widget.FrameLayout
-import androidx.core.view.setPadding
 import kotlin.math.roundToInt
 
 interface Dips : KontextSource {

@@ -12,14 +12,18 @@ import android.content.Context
 import android.view.View
 import androidx.fragment.app.Fragment
 
+fun Context.kontext(): Lazy<Kontext> = lazy { kontext }
+fun Fragment.kontext(): Lazy<Kontext> = lazy { kontext }
+fun View.kontext(): Lazy<Kontext> = lazy { kontext }
 
-fun Context.toKontext(): Kontext = Kontext(this)
+val Context.kontext: Kontext
+    get() = Kontext(this)
 
 val Fragment.kontext: Kontext
-    get() = requireContext().toKontext()
+    get() = requireContext().kontext
 
 val View.kontext: Kontext
-    get() = context.toKontext()
+    get() = context.kontext
 
 
 interface Kontext : KontextSource, KontextCompat, Dips {
@@ -28,7 +32,8 @@ interface Kontext : KontextSource, KontextCompat, Dips {
 
         operator fun invoke(context: Context): Kontext = object : Kontext {
 
-            override val baseContext: Context = context
+            override val context: Context = context
+
 
         }
 

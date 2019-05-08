@@ -38,10 +38,11 @@ fun <T : View> View.bindView(@IdRes id: Int) = lazy { findViewById<T>(id) }
 
 var View.isVisible: Boolean
     get() = visibility == View.VISIBLE
-    set(value) = when (value) {
-        true -> visibility = View.VISIBLE
-        false -> visibility = View.GONE
-    }
+    set(value) =
+        when (value) {
+            true -> visibility = View.VISIBLE
+            false -> visibility = View.GONE
+        }
 
 infix fun ViewGroup.add(view: View): Dispose {
     addView(view)

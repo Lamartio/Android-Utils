@@ -12,9 +12,9 @@ import android.content.Context
 
 interface KontextSource {
 
-    val baseContext: Context
+    val context: Context
 
     val density: Float
-        get() = baseContext.resources.displayMetrics.density
+        get() = context.resources.displayMetrics.density
 
 }
