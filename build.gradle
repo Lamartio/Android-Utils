@@ -16,6 +16,11 @@ android {
         minSdkVersion 14
         targetSdkVersion 28
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    buildToolsVersion = '28.0.3'
 }
 
 def kotlin_version = ext.hasProperty('kotlin_version') ? ext.kotlin_version : '1.3.30'

@@ -25,7 +25,7 @@ abstract class BindableViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(i
 
 }
 
-fun <T> View.toBindableViewHolder(block: (view: View) -> (item: T) -> Unit): BindableViewHolder<T> =
+fun <T, V : View> V.toBindableViewHolder(block: (view: V) -> (item: T) -> Unit): BindableViewHolder<T> =
     object : BindableViewHolder<T>(this@toBindableViewHolder) {
 
         val bind = block(this@toBindableViewHolder)
@@ -34,13 +34,3 @@ fun <T> View.toBindableViewHolder(block: (view: View) -> (item: T) -> Unit): Bin
 
     }
 
-
-private fun test(view: View) {
-
-    view.toBindableViewHolder<String> {
-
-        { item ->
-
-        }
-    }
-}

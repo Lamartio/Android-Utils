@@ -9,11 +9,14 @@
 package io.lamart.android.utils
 
 import android.app.Activity
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.core.widget.TextViewCompat.setTextAppearance
 import androidx.fragment.app.Fragment
 import io.lamart.utils.Dispose
 import io.lamart.utils.dispose
@@ -53,3 +56,13 @@ fun View.clicks(block: () -> Unit): Dispose {
     setOnClickListener { block() }
     return dispose { setOnClickListener(null) }
 }
+
+var TextView.textAppearance: Int
+    get() = throw UnsupportedOperationException()
+    set(value) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setTextAppearance(value)
+        } else {
+            setTextAppearance(context, value)
+        }
+    }
