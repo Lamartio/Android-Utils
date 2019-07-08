@@ -29,7 +29,7 @@ infix fun <T : View> ViewGroup.inflate(@LayoutRes resource: Int): T =
         .let { it as T }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View> ViewGroup.addView(@LayoutRes resource: Int): View = inflate<T>(resource).also(::addView)
+fun <T : View> ViewGroup.addView(@LayoutRes resource: Int): T = inflate<T>(resource).also(::addView)
 
 operator fun <T : View> View.get(@IdRes id: Int): T = findViewById(id)
 

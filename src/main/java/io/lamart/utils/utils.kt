@@ -50,3 +50,7 @@ val Boolean.isFalse: Unit?
         true -> null
         false -> Unit
     }
+
+typealias Option<T> = () -> T?
+
+fun <T> T?.toOption(): Option<T> = { this }
