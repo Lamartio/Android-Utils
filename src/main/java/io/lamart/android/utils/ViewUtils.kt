@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.core.widget.TextViewCompat.setTextAppearance
 import androidx.fragment.app.Fragment
 import io.lamart.utils.Dispose
 import io.lamart.utils.dispose
@@ -41,11 +40,9 @@ fun <T : View> View.bindView(@IdRes id: Int) = lazy { findViewById<T>(id) }
 
 var View.isVisible: Boolean
     get() = visibility == View.VISIBLE
-    set(value) =
-        when (value) {
-            true -> visibility = View.VISIBLE
-            false -> visibility = View.GONE
-        }
+    set(isVisible) {
+        visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 
 infix fun ViewGroup.add(view: View): Dispose {
     addView(view)
@@ -66,3 +63,6 @@ var TextView.textAppearance: Int
             setTextAppearance(context, value)
         }
     }
+
+const val matchParent = ViewGroup.LayoutParams.MATCH_PARENT
+const val wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT

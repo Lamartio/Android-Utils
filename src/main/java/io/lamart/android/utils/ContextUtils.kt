@@ -10,6 +10,7 @@ package io.lamart.android.utils
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.util.TypedValue
 
 /**
  * Recursively traverses up the baseContext property and returns the first Context that is a type of `T`.
@@ -32,3 +33,9 @@ fun <T : Any> Context.find(type: Class<T>, inApplicationContext: Boolean = true)
         inApplicationContext -> applicationContext.find(type, false)
         else -> null
     }
+
+
+infix fun Context.dip(value: Int): Int = value.toFloat().let(::dip).toInt()
+
+infix fun Context.dip(value: Float): Float =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
