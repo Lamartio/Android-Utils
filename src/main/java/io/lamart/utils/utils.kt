@@ -10,37 +10,12 @@
 
 package io.lamart.utils
 
+import java.net.URL
 import java.util.*
 
 fun <T> Any?.cast() = this as T
 
 inline fun <reified T> Any?.castIf(): T? = takeIf { it is T }.cast()
-
-fun <T, R> T.fold(
-    block: T.() -> R,
-    catch: (e: Throwable) -> R,
-    finally: () -> Unit = {}
-): R =
-    try {
-        block()
-    } catch (e: Throwable) {
-        catch(e)
-    } finally {
-        finally()
-    }
-
-fun <R> fold(
-    block: () -> R,
-    catch: (e: Throwable) -> R,
-    finally: () -> Unit = {}
-): R =
-    try {
-        block()
-    } catch (e: Throwable) {
-        catch(e)
-    } finally {
-        finally()
-    }
 
 val Boolean.isTrue: Unit?
     get() = when (this) {
@@ -60,3 +35,5 @@ fun <T> T?.toOption(): Option<T> = { this }
 fun <T> List<T>.edit(block: MutableList<T>.() -> Unit): List<T> = toMutableList().apply(block)
 
 fun guid(): String = UUID.randomUUID().toString()
+
+fun String.toURL() = URL(this)
