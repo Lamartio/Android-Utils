@@ -15,6 +15,13 @@ abstract class BindableViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(i
 
     companion object {
 
+        operator fun <T> invoke(view: View, bind: (item: T) -> Unit) =
+            object : BindableViewHolder<T>(view) {
+
+                override fun bind(content: T) = bind.invoke(content)
+
+            }
+
         operator fun <T> invoke(view: View, bind: (view: View, item: T) -> Unit) =
             object : BindableViewHolder<T>(view) {
 
